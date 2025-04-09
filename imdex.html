@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Subtitle Editor</title>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="video-container">
+        <div class="video-h n-screen">
+            <div class="v-close hide" onclick="fulls()">❌️</div>
+           <video id="video" controls></video>
+           <div id="subtitleDisplay" ondblclick="editSubtitle(null)"class="subtitle-display text-shadow-border subText">sub here</div>
+        </div>
+        <button onclick="chooseVideo()" class="upload-button">Choose Video</button>
+        <button class="button" onclick="fulls()">fullscreen</button>
+        
+    </div>
+    <div class="controls">
+        <button class="upload-button" onclick="addSubtitle()">Add Subtitle</button>
+        <input type="file" id="fileInput" style="display: none;">
+        <label for="fileInput" class="upload-button button">Upload Subtitles</label>
+        <button onclick="translateAll(this)">Translate To sinhala</button>
+        <button class="upload-button" onclick="downloadSRT()">Download Edited SRT</button>
+    </div>
+    <div id="editorContainer"></div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="script.js"></script>
+</body>
+</html>
