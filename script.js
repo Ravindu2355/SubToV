@@ -63,9 +63,23 @@ function enterVideoURL() {
         }
     });
 }
-
+/*
 document.getElementById('fileInput').addEventListener('change', function(event) {
     const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        subtitles = parseSRT(e.target.result);
+        renderSubtitles();
+    };
+    reader.readAsText(file);
+});
+*/
+document.getElementById('fileInput').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (!file) {
+        console.error('No file selected');
+        return;
+    }
     const reader = new FileReader();
     reader.onload = function(e) {
         subtitles = parseSRT(e.target.result);
