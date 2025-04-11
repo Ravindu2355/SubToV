@@ -270,7 +270,7 @@ function downloadSRT() {
 function generateSRT() {
     let srtContent = "";
     subtitles.forEach((sub, index) => {
-        const time = sub.time.replace(' --> ', '\n');
+        const time = sub.time;//.replace(' --> ', '\n');
         srtContent += `${index + 1}\n${time}\n${sub.text}\n\n`;
     });
     return srtContent;
