@@ -222,15 +222,7 @@ function removeSubtitle(index,el) {
 }
 
 function formatTimeInput(input) {
-    let value = input.value.replace(/[^\d,]/g, ''); // Remove non-numeric characters
-    if (value.length >= 6) {
-        // Ensure it formats as HH:MM:SS,SSS
-        value = value.replace(/(\d{2})(\d{2})(\d{2})(\d{3})/, '$1:$2:$3,$4');
-    }
-    if (value.length > 12) {
-        value = value.substring(0, 12); // Limit to 12 characters (HH:MM:SS,SSS)
-    }
-    input.value = value;
+    
 }
 
 function translateText(index) {
