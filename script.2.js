@@ -140,7 +140,8 @@ function highlightSubtitle() {
         if (currentTime >= start && currentTime <= end) {
             document.querySelectorAll('.subtitle-button')[i].classList.add('active');
             if(sub.text){
-               subtitleDisplay.textContent = sub.text;
+               //subtitleDisplay.textContent = sub.text;
+               subtitleDisplay.innerHTML = sub.text;
             }else{
                subtitleDisplay.textContent = ""
             }
