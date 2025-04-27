@@ -12,6 +12,28 @@ function chooseVideo() {
     });
 }
 
+function selectSrt() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.srt';
+    input.onchange = event => {
+        const file = event.target.files[0];
+        if (!file) {
+          console.error('No file selected');
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(e) {
+           subtitles = parseSRT(e.target.result);
+           console.log(`${subtitles}`);
+           renderSubtitles();
+        };
+        reader.readAsText(file);
+        event.target.value='';   
+    };
+    input.click();
+}
+
 function selectLocalVideo() {
     Swal.close();
     const input = document.createElement('input');
