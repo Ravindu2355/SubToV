@@ -83,6 +83,7 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
     const reader = new FileReader();
     reader.onload = function(e) {
         subtitles = parseSRT(e.target.result);
+        console.log(`${subtitles}`);
         renderSubtitles();
     };
     reader.readAsText(file);
