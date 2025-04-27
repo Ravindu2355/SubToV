@@ -15,7 +15,6 @@ function chooseVideo() {
 function selectSrt() {
     const input = document.createElement('input');
     input.type = 'file';
-    input.accept = '.srt';
     input.onchange = event => {
         const file = event.target.files[0];
         if (!file) {
@@ -96,20 +95,27 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
     reader.readAsText(file);
 });
 */
+
 document.getElementById('fileInput').addEventListener('change', function(event) {
+    console.log('File input changed');
     const file = event.target.files[0];
     if (!file) {
         console.error('No file selected');
         return;
     }
+    console.log('File selected:', file.name);
     const reader = new FileReader();
     reader.onload = function(e) {
+        console.log('FileReader loaded');
+        console.log('File content:', e.target.result.substring(0, 100)); // Show first 100 characters
         subtitles = parseSRT(e.target.result);
-        console.log(`${subtitles}`);
+        console.log('Subtitles parsed:', subtitles);
         renderSubtitles();
     };
+    reader.onerror = function(err) {
+        console.error('FileReader error:', err);
+    };
     reader.readAsText(file);
-    event.target.value='';
 });
 
 function parseSRT(srtText) {
