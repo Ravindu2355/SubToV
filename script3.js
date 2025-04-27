@@ -87,6 +87,7 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
         renderSubtitles();
     };
     reader.readAsText(file);
+    event.target.value='';
 });
 
 function parseSRT(srtText) {
