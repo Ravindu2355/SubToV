@@ -27,10 +27,33 @@
         <label for="fileInput" style="display:none;" accept=".srt" class="upload-button button">Upload Subtitles</label><br>
         <p class="srtName">No file!</p><br>
         <button onclick="selectSrt()">Select SRT</button><br>
+        <button onclick="promptRegexReplace()">Replace</button><br>
         <button onclick="translateAll(this)">Translate To sinhala</button><br>
         <button class="upload-button" onclick="downloadSRT()">Download Edited SRT</button>
     </div>
     <div id="editorContainer"></div>
+    <script>
+        // Prevent pull-down refresh (mainly Chrome on Android)
+document.addEventListener('touchstart', function (e) {
+  if (e.touches.length > 1) return; // Allow multi-touch
+  this._startY = e.touches[0].clientY;
+}, { passive: false });
+
+document.addEventListener('touchmove', function (e) {
+  const y = e.touches[0].clientY;
+  const deltaY = y - this._startY;
+  if (window.scrollY === 0 && deltaY > 0) {
+    e.preventDefault(); // Prevent pull down
+  }
+}, { passive: false });
+// Push a dummy state
+history.pushState(null, null, location.href);
+
+window.addEventListener('popstate', function () {
+  history.pushState(null, null, location.href);
+  Swal.fire('Back navigation is disabled');
+});
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="script3.js"></script>
 </body>
