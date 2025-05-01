@@ -147,7 +147,7 @@ function renderSubtitles() {
         const btn = document.createElement('button');
         btn.className = 'subtitle-button';
         btn.textContent = `${sub.text}`;
-        btn.onclick = () => editSubtitle(i);
+        btn.onclick = () => editSubtitleN(i);
         btn.dataset.index = i;
         //const removeBtn = document.createElement('button');
        // removeBtn.className = 'subtitle-button remove';
@@ -190,6 +190,30 @@ function convertToSeconds(timeString) {
     return parseInt(parts[0]) * 3600 + parseInt(parts[1]) * 60 + seconds;
 }
 
+async function editSubtitleN(index) {
+    if(!index){
+        swal.fire("Err","No index","error");
+        return;
+    }
+    await Swal.fire({
+        title: 'Edit Subtitle',
+        html: `<div style='width:100%'>
+               <input id='timeInput' class='swal2-input' value='${subtitles[index].time}' oninput="formatTimeInput(this)">
+               <textarea id='textInput' class='swal2-textarea' style='max-height: 100px;'>${subtitles[index].text}</textarea>
+               <button onclick='translateText(${index})' class='swal2-confirm'>Translate</button>
+               <button onclick='removeSubtitle(${index},this)' class='swal2-confirm' style='background:red;color:white;'>RemoveLine</button>
+               </div>`,
+        showCancelButton: true,
+        confirmButtonText: 'Save',
+        preConfirm: () => {
+            subtitles[index].time = document.getElementById('timeInput').value;
+            subtitles[index].text = document.getElementById('textInput').value;
+            renderSubtitles();
+            highlightSubtitle();
+        }
+    });
+}
+
 async function editSubtitle(index) {
     if(!video.paused){
         video.pause();
@@ -219,6 +243,22 @@ async function editSubtitle(index) {
     }
 }
 
+function formatSrtTime(seconds) {
+  const ms = Math.floor((seconds % 1) * 1000);
+  const totalSeconds = Math.floor(seconds);
+  const hrs = Math.floor(totalSeconds / 3600);
+  const mins = Math.floor((totalSeconds % 3600) / 60);
+  const secs = totalSeconds % 60;
+
+  return `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')},${String(ms).padStart(3, '0')}`;
+}
+
+function getSrtTimeRange(currentTime, duration = 5) {
+  const start = formatSrtTime(currentTime);
+  const end = formatSrtTime(currentTime + duration);
+  return `${start} --> ${end}`;
+}
+
 async function addSubtitle() {
     if(!video.paused){
         video.pause();
@@ -229,6 +269,12 @@ async function addSubtitle() {
                <textarea id='newTextInput' class='swal2-textarea' placeholder='Subtitle Text'></textarea>`,
         showCancelButton: true,
         confirmButtonText: 'Add',
+        didOpen: ()=>{
+            nti=document.getElementById('newTimeInput');
+            if(nti){
+                nti.value=getSrtTimeRange(video.currentTime,5);
+            }
+        },
         preConfirm: () => {
             const newTime = document.getElementById('newTimeInput').value;
             const newText = document.getElementById('newTextInput').value;
