@@ -178,6 +178,7 @@ async function promptRegexReplace() {
     replaceFromAll(formValues.pattern, formValues.replacement);
     Swal.fire('Done!', 'Replacement applied.', 'success');
   }
+    renderSubtitles();
 }
 
 function renderSubtitles() {
