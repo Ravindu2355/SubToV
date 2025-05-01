@@ -158,3 +158,9 @@ button {
 .swal2-popup textarea{
     width: 80%vw;
 }
+label{
+    width:auto;
+    max-width:50%;
+    border-radius:7px;
+    padding:5px;
+}
