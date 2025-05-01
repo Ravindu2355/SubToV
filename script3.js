@@ -139,6 +139,43 @@ function parseSRT(srtText) {
     return subtitleData;
 }
 
+function replaceFromAll(patternStr, replacement, flags = 'g') {
+    try {
+        const regex = new RegExp(patternStr, flags);
+        subtitles.forEach((sub, i) => {
+            sub.text = sub.text.replace(regex, replacement);
+        });
+    } catch (err) {
+        console.error("Invalid regex:", err.message);
+        Swal.fire("Invalid Regex", err.message, "error");
+    }
+}
+
+async function promptRegexReplace() {
+  const { value: formValues } = await Swal.fire({
+    title: 'Regex Replace',
+    html:
+      `<input id="patternInput" class="swal2-input" placeholder="Regex pattern (e.g., hello|hi)">` +
+      `<input id="replacementInput" class="swal2-input" placeholder="Replacement text">`,
+    focusConfirm: false,
+    showCancelButton: true,
+    confirmButtonText: 'Replace',
+    preConfirm: () => {
+      const pattern = document.getElementById('patternInput').value.trim();
+      const replacement = document.getElementById('replacementInput').value;
+      if (!pattern) {
+        Swal.showValidationMessage('Pattern is required');
+        return false;
+      }
+      return { pattern, replacement };
+    }
+  });
+
+  if (formValues) {
+    replaceFromAll(formValues.pattern, formValues.replacement);
+    Swal.fire('Done!', 'Replacement applied.', 'success');
+  }
+}
 
 function renderSubtitles() {
     const container = document.getElementById('editorContainer');
