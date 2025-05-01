@@ -21,7 +21,7 @@ function selectSrt() {
           console.error('No file selected');
           return;
         }
-        srtfname = file.name;
+        srtfname.textContent = file.name;
         const reader = new FileReader();
         reader.onload = function(e) {
            subtitles = parseSRT(e.target.result);
@@ -105,7 +105,7 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
         console.error('No file selected');
         return;
     }
-    srtfname = file.name;
+    srtfname.textContent = file.name;
     console.log('File selected:', file.name);
     const reader = new FileReader();
     reader.onload = function(e) {
