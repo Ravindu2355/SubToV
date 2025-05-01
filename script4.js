@@ -142,17 +142,7 @@ function parseSRT(srtText) {
     return subtitleData;
 }
 
-function replaceFromAll(patternStr, replacement, flags = 'g') {
-    try {
-        const regex = new RegExp(patternStr, flags);
-        subtitles.forEach((sub, i) => {
-            sub.text = sub.text.replace(regex, replacement);
-        });
-    } catch (err) {
-        console.error("Invalid regex:", err.message);
-        Swal.fire("Invalid Regex", err.message, "error");
-    }
-}
+
 
 function renderSubtitles() {
     const container = document.getElementById('editorContainer');
@@ -170,6 +160,19 @@ function renderSubtitles() {
         container.appendChild(btn);
     });
     video.addEventListener('timeupdate', highlightSubtitle);
+}
+
+function replaceFromAll(patternStr, replacement, flags = 'g') {
+    try {
+        const regex = new RegExp(patternStr, flags);
+        subtitles.forEach((sub, i) => {
+            sub.text = sub.text.replace(regex, replacement);
+        });
+        renderSubtitles();
+    } catch (err) {
+        console.error("Invalid regex:", err.message);
+        Swal.fire("Invalid Regex", err.message, "error");
+    }
 }
 
 async function promptRegexReplace() {
@@ -194,9 +197,9 @@ async function promptRegexReplace() {
 
   if (formValues) {
     replaceFromAll(formValues.pattern, formValues.replacement);
-    renderSubtitles();
     Swal.fire('Done!', 'Replacement applied.', 'success');
   }
+  
 }
 
 
