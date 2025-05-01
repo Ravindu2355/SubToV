@@ -154,6 +154,24 @@ function replaceFromAll(patternStr, replacement, flags = 'g') {
     }
 }
 
+function renderSubtitles() {
+    const container = document.getElementById('editorContainer');
+    container.innerHTML = "";
+    subtitles.forEach((sub, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'subtitle-button';
+        btn.textContent = `${sub.text}`;
+        btn.onclick = () => editSubtitleN(i);
+        btn.dataset.index = i;
+        //const removeBtn = document.createElement('button');
+       // removeBtn.className = 'subtitle-button remove';
+        //removeBtn.textContent = 'Remove';
+       // removeBtn.onclick = () => removeSubtitle(i);
+        container.appendChild(btn);
+    });
+    video.addEventListener('timeupdate', highlightSubtitle);
+}
+
 async function promptRegexReplace() {
   const { value: formValues } = await Swal.fire({
     title: 'Regex Replace',
@@ -176,28 +194,11 @@ async function promptRegexReplace() {
 
   if (formValues) {
     replaceFromAll(formValues.pattern, formValues.replacement);
+    renderSubtitles();
     Swal.fire('Done!', 'Replacement applied.', 'success');
   }
-    renderSubtitles();
 }
 
-function renderSubtitles() {
-    const container = document.getElementById('editorContainer');
-    container.innerHTML = "";
-    subtitles.forEach((sub, i) => {
-        const btn = document.createElement('button');
-        btn.className = 'subtitle-button';
-        btn.textContent = `${sub.text}`;
-        btn.onclick = () => editSubtitleN(i);
-        btn.dataset.index = i;
-        //const removeBtn = document.createElement('button');
-       // removeBtn.className = 'subtitle-button remove';
-        //removeBtn.textContent = 'Remove';
-       // removeBtn.onclick = () => removeSubtitle(i);
-        container.appendChild(btn);
-    });
-    video.addEventListener('timeupdate', highlightSubtitle);
-}
 
 nsubf=0;
 function highlightSubtitle() {
