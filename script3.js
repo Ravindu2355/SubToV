@@ -2,7 +2,7 @@ let subtitles = [];
 let video = document.getElementById('video');
 let subtitleDisplay = document.getElementById('subtitleDisplay');
 let vclose = document.querySelector('.v-close');
-let srtfname = document.querySelector('.');
+let srtfname = document.querySelector('.srtName');
 
 function chooseVideo() {
     Swal.fire({
