@@ -2,7 +2,7 @@ let subtitles = [];
 let video = document.getElementById('video');
 let subtitleDisplay = document.getElementById('subtitleDisplay');
 let vclose = document.querySelector('.v-close');
-
+let srtfname = document.querySelector('.');
 
 function chooseVideo() {
     Swal.fire({
@@ -21,6 +21,7 @@ function selectSrt() {
           console.error('No file selected');
           return;
         }
+        srtfname = file.name;
         const reader = new FileReader();
         reader.onload = function(e) {
            subtitles = parseSRT(e.target.result);
@@ -45,6 +46,7 @@ function selectLocalVideo() {
     };
     input.click();
 }
+
 function playM3u8(videoSrc,poster) {
    video.poster=poster;
    if (Hls.isSupported()) {
@@ -103,6 +105,7 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
         console.error('No file selected');
         return;
     }
+    srtfname = file.name;
     console.log('File selected:', file.name);
     const reader = new FileReader();
     reader.onload = function(e) {
