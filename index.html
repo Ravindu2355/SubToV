@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style1.css">
 </head>
 <body>
     <div class="video-container">
@@ -23,8 +23,8 @@
     </div>
     <div class="controls">
         <button class="upload-button" onclick="addSubtitle()">Add Subtitle</button><br>
-        <input type="file" id="fileInput" style="display:;">
-        <label for="fileInput" style="display:none;" accept=".srt" class="upload-button button">Upload Subtitles</label><br>
+        <input type="file" id="fileInput" style="display:none;">
+        <label for="fileInput" style="display:;" accept=".srt" class="upload-button button">Select Srt</label><br>
         <p class="srtName">No file!</p><br>
         <!--<button onclick="selectSrt()">Select SRT</button><br>-->
         <button onclick="promptRegexReplace()">Replace</button><br>
@@ -55,6 +55,6 @@ window.addEventListener('popstate', function () {
 });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="script4.js"></script>
+    <script src="script3.js"></script>
 </body>
 </html>
