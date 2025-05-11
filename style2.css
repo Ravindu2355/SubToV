@@ -164,3 +164,7 @@ label{
     border-radius:7px;
     padding:5px;
 }
+.srtName{
+    max-width: 90%;
+    overflow:none;
+}
