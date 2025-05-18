@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="style3.css">
 </head>
 <body>
@@ -66,7 +66,7 @@ async function registerSWAndSync() {
       return;
     }
 
-    const reg = await navigator.serviceWorker.register('/sw.js');
+    const reg = await navigator.serviceWorker.register('sw.js');
     console.log('Service Worker registered.');
 
     const swReady = await navigator.serviceWorker.ready;
