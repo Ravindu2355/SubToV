@@ -57,5 +57,27 @@ window.addEventListener('popstate', function () {
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="script2.js"></script>
+    <script>
+async function registerSWAndSync() {
+  if ('Notification' in window && 'serviceWorker' in navigator && 'SyncManager' in window) {
+    const permission = await Notification.requestPermission();
+    if (permission !== 'granted') {
+      alert("Notifications are disabled. Please allow them.");
+      return;
+    }
+
+    const reg = await navigator.serviceWorker.register('/sw.js');
+    console.log('Service Worker registered.');
+
+    const swReady = await navigator.serviceWorker.ready;
+    await swReady.sync.register('check-notification');
+    console.log('Background sync registered.');
+  } else {
+    alert("Your browser doesn't support background sync or notifications.");
+  }
+}
+
+registerSWAndSync();
+    </script>
 </body>
 </html>
