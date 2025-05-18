@@ -1,11 +1,10 @@
 {
   "name": "SubToV",
   "short_name": "S2V",
-  "start_url": "/",
+  "start_url": "/SubToV/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#000000",
-  "scope":"/",
   "icons": [
     {
       "src": "/img/icon-192.png",
