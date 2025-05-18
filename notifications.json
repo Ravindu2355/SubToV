@@ -10,5 +10,17 @@
     "title": "Update Available",
     "message": "We’ve added new features!",
     "icon": "https://ravindu2355.github.io/SubToV/img/icon-192.png"
-  }
+  },
+  {
+    "id": 3,
+    "title": "Hello!",
+    "message": "This is the first message.",
+    "icon": "https://ravindu2355.github.io/SubToV/img/icon-192.png"
+  },
+  {
+    "id": 4,
+    "title": "Hello!",
+    "message": "This is the first message.",
+    "icon": "https://ravindu2355.github.io/SubToV/img/icon-192.png"
+  },
 ]
