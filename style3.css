@@ -167,4 +167,7 @@ label{
 .srtName{
     max-width: 90%;
     overflow:none;
+    overflow-x:scroll;
+    overflow-wrap: break-word;
+  word-break: break-word;
 }
