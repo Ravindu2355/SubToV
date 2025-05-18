@@ -75,7 +75,33 @@ function enterVideoURL() {
         title: 'Enter Video URL',
         input: 'text',
         showCancelButton: true,
-        confirmButtonText: 'Load'
+        confirmButtonText: 'Load',
+        didOpen: () => {
+            const input = Swal.getInput();
+            input.addEventListener('input', () => {
+                // Example: auto-replace "example.com" with "cdn.example.com"
+                input.value = input.value.replace('/u/', '/api/file/');
+            });
+        }
+    }).then((result) => {
+        if (result.isConfirmed && result.value) {
+            if (result.value.includes("m3u8")) {
+                playM3u8(result.value, "");
+            } else {
+                video.src = result.value;
+            }
+        }
+    });
+}
+function enterVideoURLold() {
+    Swal.fire({
+        title: 'Enter Video URL',
+        input: 'text',
+        showCancelButton: true,
+        confirmButtonText: 'Load',
+        didOpen:function (){
+            
+        }
     }).then((result) => {
         if (result.isConfirmed) {
             if (result.value.includes("m3u8")==true){
