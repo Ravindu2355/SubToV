@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>SubToV - Subtitle Editor</title>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style4.css">
+</head>
+<body>
+    <header class="app-header">
+        <h1><span class="material-icons">subtitles</span> SubToV</h1>
+        <p class="subtitle">Subtitle Editor & Video Player</p>
+    </header>
+
+    <main class="main-container">
+        <section class="video-section">
+            <div class="video-container">
+                <div class="video-player n-screen">
+                    <div class="player-controls">
+                        <button class="control-btn" onclick="fulls()" title="Fullscreen">
+                            <span class="material-icons">fullscreen</span>
+                        </button>
+                        <div class="v-close hide" onclick="fulls()">
+                            <span class="material-icons">close</span>
+                        </div>
+                    </div>
+                    <video id="video" controls></video>
+                    <div id="subtitleDisplay" ondblclick="editSubtitle(null)" class="subtitle-display text-shadow-border subText">Subtitles will appear here</div>
+                </div>
+                
+                <div class="video-source-buttons">
+                    <button onclick="chooseVideo()" class="btn-primary">
+                        <span class="material-icons">video_library</span>
+                        Choose Video
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="controls-section">
+            <div class="controls-card">
+                <h2><span class="material-icons">tune</span> Controls</h2>
+                
+                <div class="control-group">
+                    <label for="fileInput" class="file-input-label">
+                        <span class="material-icons">attach_file</span>
+                        Select SRT File
+                    </label>
+                    <input type="file" id="fileInput" style="display:none;" accept=".srt">
+                    <p class="srtName">No file selected</p>
+                </div>
+                
+                <div class="control-group">
+                    <button onclick="addSubtitle()" class="btn-secondary">
+                        <span class="material-icons">add</span>
+                        Add Subtitle
+                    </button>
+                </div>
+                
+                <div class="control-group">
+                    <button onclick="promptRegexReplace()" class="btn-secondary">
+                        <span class="material-icons">find_replace</span>
+                        Find & Replace
+                    </button>
+                </div>
+                
+                <div class="control-group">
+                    <button onclick="translateAll(this)" class="btn-secondary">
+                        <span class="material-icons">translate</span>
+                        Translate to Sinhala
+                    </button>
+                </div>
+                
+                <div class="control-group">
+                    <button class="btn-primary" onclick="downloadSRT()">
+                        <span class="material-icons">download</span>
+                        Download SRT
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="subtitles-section">
+            <div class="subtitles-card">
+                <h2><span class="material-icons">format_quote</span> Subtitles</h2>
+                <div id="editorContainer" class="subtitles-container"></div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Prevent pull-down refresh (mainly Chrome on Android)
+        document.addEventListener('touchstart', function (e) {
+          if (e.touches.length > 1) return; // Allow multi-touch
+          this._startY = e.touches[0].clientY;
+        }, { passive: false });
+
+        document.addEventListener('touchmove', function (e) {
+          const y = e.touches[0].clientY;
+          const deltaY = y - this._startY;
+          if (window.scrollY === 0 && deltaY > 0) {
+            e.preventDefault(); // Prevent pull down
+          }
+        }, { passive: false });
+        
+        // Push a dummy state
+        history.pushState(null, null, location.href);
+
+        window.addEventListener('popstate', function () {
+          history.pushState(null, null, location.href);
+          Swal.fire('Back navigation is disabled');
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="script2.js"></script>
+    <script>
+        async function registerSWAndSync() {
+          if ('Notification' in window && 'serviceWorker' in navigator && 'SyncManager' in window) {
+            const permission = await Notification.requestPermission();
+            if (permission !== 'granted') {
+              alert("Notifications are disabled. Please allow them.");
+              return;
+            }
+
+            const reg = await navigator.serviceWorker.register('sw.js');
+            console.log('Service Worker registered.');
+
+            const swReady = await navigator.serviceWorker.ready;
+            await swReady.sync.register('check-notification');
+            console.log('Background sync registered.');
+          } else {
+            alert("Your browser doesn't support background sync or notifications.");
+          }
+        }
+
+        registerSWAndSync();
+    </script>
+</body>
+  </html>
